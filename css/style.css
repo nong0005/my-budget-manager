@@ -214,6 +214,18 @@ ul li button {
   color: #fff;
 }
 
+/* Add this to your style.css */
+.removeBtn {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+
 /* ===== Daily History ===== */
 #historySection {
   max-height: 400px;
@@ -530,6 +542,7 @@ footer {
     width: 90%;
   }
 
+
 }
 
 @media (max-width: 480px) {
@@ -548,6 +561,7 @@ footer {
     font-size: 1rem !important;
     box-sizing: border-box;
   }
+
 
   /* Optional: ensure buttons next to date inputs have margin for spacing */
   #upcomingDate,
@@ -573,4 +587,5 @@ footer {
   .footer-text {
     font-size: 0.9rem;
   }
+  
 }
