@@ -530,10 +530,6 @@ footer {
     width: 90%;
   }
 
-  #chatPopup {
-    width: 90%;
-    bottom: 90px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -558,11 +554,6 @@ footer {
   #passwordCard {
     width: 90%;
     padding: 25px;
-  }
-
-  #chatPopup {
-    width: 95%;
-    bottom: 80px;
   }
 
   .footer-text {
