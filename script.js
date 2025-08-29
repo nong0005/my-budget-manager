@@ -199,22 +199,20 @@ setupForm.addEventListener("submit", e => {
 /***************
  * HISTORY SNAPSHOT
  ***************/
-function saveDailySnapshot() {
+  function saveDailySnapshot() {
     const today = new Date().toISOString().split('T')[0];
-    // Save snapshot only if it doesn't exist for today
-    if (!history[today]) {
-      history[today] = {
-        balance: account.balance,
-        savings: account.savings,
-        incomes: [...incomes],
-        expenses: [...expenses],
-        owings: [...owings],
-        upcomingPayments: [...upcomingPayments]
-      };
-      localStorage.setItem('budgetHistory', JSON.stringify(history));
-    }
+    // Always overwrite today's snapshot so it's up to date
+    history[today] = {
+    balance: account.balance,
+    savings: account.savings,
+    incomes: [...incomes],
+    expenses: [...expenses],
+    owings: [...owings],
+    upcomingPayments: [...upcomingPayments]
+    };
+    localStorage.setItem('budgetHistory', JSON.stringify(history));
   }
-  
+
   function renderHistory(date = null) {
     historyList.innerHTML = "";
     if (!date) return; // Do nothing if no date is specified
@@ -250,25 +248,27 @@ function saveDailySnapshot() {
       <u>Owings:</u><br>${owingDetails}<br>
       <u>Upcoming Payments:</u><br>${upcomingDetails}`;
   
-    historyList.appendChild(div);
-  }
+      historyList.appendChild(div);
+    }
   
-  viewHistoryBtn.addEventListener("click", ()=>{
+    viewHistoryBtn.addEventListener("click", () => {
     const date = historyDateInput.value;
-    if(!date) return alert("Pick a date");
-  
-    // Save snapshot for today only if the selected date is today
-    if (date === new Date().toISOString().split('T')[0]) saveDailySnapshot();
-  
+    if (!date) return alert("Pick a date");
+
+    // Always refresh today's snapshot before showing
+    if (date === new Date().toISOString().split('T')[0]) {
+      saveDailySnapshot();
+    }
+
     renderHistory(date);
     closeHistoryBtn.style.display = "inline-block";
-  });
+    });
   
-  closeHistoryBtn.addEventListener("click", ()=>{
-    historyList.innerHTML = "";
-    historyDateInput.value = "";
-    closeHistoryBtn.style.display = "none";
-  });
+    closeHistoryBtn.addEventListener("click", ()=>{
+      historyList.innerHTML = "";
+      historyDateInput.value = "";
+      closeHistoryBtn.style.display = "none";
+    });
 /***************
  * RENDER LISTS + REMOVE
  ***************/
@@ -535,180 +535,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateDashboard();
 });
 
-/***************
- * CHATBOT
- ***************/
-let chatbotHistory = [];
-const guidanceTemplate = "Ask me about your current balance, who owes you, your expenses, upcoming payments, or get spending tips.";
-const moneyTips = [
-  "Track your expenses daily to stay in control of your money.",
-  "Always save at least 10% of your income.",
-  "Avoid impulse purchases; plan your spending.",
-  "Review your budget weekly for better control.",
-  "Pay off high-interest debts first.",
-  "Keep an emergency fund for unexpected expenses.",
-  "Set financial goals for the short and long term.",
-  "Use cash envelopes for discretionary spending.",
-  "Check your bank statements regularly for errors.",
-  "Invest regularly, even small amounts.",
-  "Avoid unnecessary subscriptions you don’t use.",
-  "Compare prices before making major purchases.",
-  "Prioritize needs over wants.",
-  "Automate savings to ensure consistency.",
-  "Keep track of who owes you and who you owe.",
-  "Review your credit score periodically.",
-  "Limit dining out to save more money.",
-  "Sell unused items for extra cash.",
-  "Plan for large purchases to avoid debt.",
-  "Always have a clear financial plan for the month."
-];
 
-// Popup (dynamic)
-const chatPopup = document.createElement("div");
-chatPopup.id = "chatPopup";
-Object.assign(chatPopup.style, {
-  display:"none", flexDirection:"column", position:"fixed",
-  bottom:"80px", right:"20px", width:"320px", background:"#fff",
-  border:"1px solid #ccc", borderRadius:"8px", boxShadow:"0 2px 8px rgba(0,0,0,0.2)",
-  zIndex:"1001", fontFamily:"Arial, sans-serif", padding:"5px", maxHeight:"400px"
-});
-
-// Header
-const chatHeader = document.createElement("div");
-chatHeader.id = "chatHeader";
-Object.assign(chatHeader.style, {
-  background:"#27ae60", color:"#fff", padding:"5px 10px",
-  borderRadius:"6px 6px 0 0", fontWeight:"bold", display:"flex",
-  justifyContent:"space-between", alignItems:"center"
-});
-chatHeader.innerHTML = `<span>💬 Chat</span><span id="closeChat" style="cursor:pointer;">✖</span>`;
-chatPopup.appendChild(chatHeader);
-
-// Tip + guidance
-const tipContainer = document.createElement("div");
-tipContainer.id = "tipContainer";
-Object.assign(tipContainer.style, {
-  display:"flex", flexDirection:"column", background:"#f1c40f", color:"#2c3e50",
-  padding:"5px 10px", borderRadius:"5px", margin:"5px 0", fontSize:"0.9rem", textAlign:"center"
-});
-const guidanceText = document.createElement("div");
-guidanceText.textContent = guidanceTemplate;
-guidanceText.style.fontWeight = "bold";
-guidanceText.style.marginBottom = "5px";
-const tipText = document.createElement("div");
-tipText.id = "tipText";
-tipContainer.appendChild(guidanceText);
-tipContainer.appendChild(tipText);
-chatPopup.appendChild(tipContainer);
-
-// Messages
-const chatMessages = document.createElement("div");
-chatMessages.id = "chatMessages";
-Object.assign(chatMessages.style, { flex:"1", overflowY:"auto", height:"200px", padding:"5px" });
-chatPopup.appendChild(chatMessages);
-
-// Controls
-const chatControls = document.createElement("div");
-chatControls.id = "chatControls";
-Object.assign(chatControls.style, { display:"flex", marginTop:"5px" });
-const chatInput = document.createElement("input");
-chatInput.id = "chatInput";
-chatInput.placeholder = "Type a message...";
-Object.assign(chatInput.style, { flex:"1", padding:"5px" });
-const sendChat = document.createElement("button");
-sendChat.id = "sendChat";
-sendChat.textContent = "Send";
-Object.assign(sendChat.style, {
-  padding:"5px 8px", marginLeft:"5px", background:"#27ae60",
-  color:"#fff", border:"none", borderRadius:"5px", cursor:"pointer"
-});
-chatControls.appendChild(chatInput);
-chatControls.appendChild(sendChat);
-chatPopup.appendChild(chatControls);
-document.body.appendChild(chatPopup);
-
-// Open/Close
-const openChatBtn = document.getElementById("openChatBtn");
-const closeChat = chatHeader.querySelector("#closeChat");
-
-if (openChatBtn) {
-  openChatBtn.addEventListener("click", () => {
-    chatPopup.style.display = "flex";
-    openChatBtn.style.display = "none";
-    chatbotHistory = [];
-    chatMessages.innerHTML = "";
-    tipText.textContent = moneyTips[Math.floor(Math.random() * moneyTips.length)];
-  });
-}
-
-closeChat.addEventListener("click", () => {
-  chatPopup.style.display = "none";
-  if (openChatBtn) openChatBtn.style.display = "block";
-  chatbotHistory = [];
-  chatMessages.innerHTML = "";
-  tipText.textContent = "";
-});
-
-// Chat render
-function renderChatbotHistory() {
-  chatMessages.innerHTML = "";
-  chatbotHistory.forEach(msg => {
-    const div = document.createElement("div");
-    div.textContent = msg.text;
-    div.className = msg.type;
-    Object.assign(div.style, {
-      margin:"3px 0", padding:"5px 8px", borderRadius:"12px",
-      maxWidth:"80%", wordBreak:"break-word",
-      alignSelf: msg.type === "bot" ? "flex-start" : "flex-end",
-      background: msg.type === "bot" ? "#bdc3c7" : "#27ae60",
-      color: msg.type === "bot" ? "#2c3e50" : "#fff"
-    });
-    chatMessages.appendChild(div);
-  });
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function addChatbotMessage(text, type = "user") {
-  chatbotHistory.push({ text, type });
-  renderChatbotHistory();
-}
-
-// Chat logic
-sendChat.addEventListener("click", () => {
-  const msg = chatInput.value.trim();
-  if (!msg) return;
-  addChatbotMessage(msg, "user");
-  chatInput.value = "";
-
-  setTimeout(() => {
-    let response = "I’m here to help with your finances!";
-    const t = msg.toLowerCase();
-
-    if (t.includes("balance")) {
-      response = `Your current balance is ${account.currency} ${account.balance.toFixed(2)}.`;
-    } else if (t.includes("owed to me") || t.includes("who owes me") || t.includes("they owe")) {
-      const total = owings.filter(o => o.type === "they-owe-me").reduce((s, o) => s + o.amount, 0);
-      response = `Total owed to you: ${account.currency} ${total.toFixed(2)}.`;
-    } else if (t.includes("i owe") || t.includes("owe others")) {
-      const total = owings.filter(o => o.type === "i-owe").reduce((s, o) => s + o.amount, 0);
-      response = `Total you owe others: ${account.currency} ${total.toFixed(2)}.`;
-    } else if (t.includes("upcoming")) {
-      const total = upcomingPayments.reduce((s, p) => s + p.amount, 0);
-      response = `Total upcoming payments: ${account.currency} ${total.toFixed(2)}.`;
-    } else if (t.includes("spend today")) {
-      const dailyBudget = Math.max(account.balance * 0.2, 0);
-      response = `You can spend up to ${account.currency} ${dailyBudget.toFixed(2)} today safely.`;
-    } else if (t.includes("saving tip") || t.includes("advice")) {
-      response = moneyTips[Math.floor(Math.random() * moneyTips.length)];
-    }
-
-    addChatbotMessage(response, "bot");
-  }, 400);
-});
-
-chatInput.addEventListener("keypress", e => {
-  if (e.key === "Enter") sendChat.click();
-});
 
 /***************
  * INITIALIZE

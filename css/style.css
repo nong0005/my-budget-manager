@@ -1,9 +1,11 @@
 /* ===== General Reset ===== */
 
-input, select, button {
+input, select {
+  width: 100% !important; 
   font-size: 1.05rem; /* slightly bigger text */
   padding: 12px;      /* more comfortable padding */
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -14,7 +16,7 @@ input, select, button {
 input[type="date"] {
   width: 100% !important;       /* full width */
   min-width: 0;                 /* prevent overflow */
-  padding: 12px !important;     /* enough padding for touch */
+  padding: 18px !important;     /* enough padding for touch */
   font-size: 1rem !important;   /* readable font */
   box-sizing: border-box;       /* include padding in width */
 }
@@ -536,7 +538,7 @@ footer {
   /* Form inputs and buttons bigger for mobile */
   input, select, button {
     width: 100% !important;
-    padding: 12px !important;
+    padding: 18px !important;
     font-size: 1rem !important;
     margin-bottom: 12px !important;
   }
@@ -575,7 +577,7 @@ footer {
 
   input[type="date"] {
     font-size: 1.1rem !important;   /* slightly bigger for easier tapping */
-    padding: 14px !important;
+    padding: 18px !important;
   }
 
   .dashboard-grid div {
