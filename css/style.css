@@ -11,6 +11,14 @@ input, select, button {
   font-family: Arial, sans-serif;
 }
 
+input[type="date"] {
+  width: 100% !important;       /* full width */
+  min-width: 0;                 /* prevent overflow */
+  padding: 12px !important;     /* enough padding for touch */
+  font-size: 1rem !important;   /* readable font */
+  box-sizing: border-box;       /* include padding in width */
+}
+
 body {
   background-color: #f4f4f9;
   color: #333;
@@ -554,15 +562,6 @@ footer {
     grid-template-columns: 1fr; /* stack cards vertically */
   }
 
-  /* Make all date inputs full width and taller for easy tap */
-  input[type="date"] {
-    width: 100% !important;
-    padding: 14px 12px !important;
-    font-size: 1rem !important;
-    box-sizing: border-box;
-  }
-
-
   /* Optional: ensure buttons next to date inputs have margin for spacing */
   #upcomingDate,
   #historyDateInput {
@@ -571,6 +570,11 @@ footer {
 
   input, select, button {
     font-size: 1rem !important;
+    padding: 14px !important;
+  }
+
+  input[type="date"] {
+    font-size: 1.1rem !important;   /* slightly bigger for easier tapping */
     padding: 14px !important;
   }
 
