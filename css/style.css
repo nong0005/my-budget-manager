@@ -1,4 +1,9 @@
 /* ===== General Reset ===== */
+
+input, select, button {
+  font-size: 1.05rem; /* slightly bigger text */
+  padding: 12px;      /* more comfortable padding */
+}
 * {
   margin: 0;
   padding: 0;
@@ -473,4 +478,94 @@ footer {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 1200px) {
+  .container {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  .dashboard-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+  .card {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  /* Form inputs and buttons bigger for mobile */
+  input, select, button {
+    width: 100% !important;
+    padding: 12px !important;
+    font-size: 1rem !important;
+    margin-bottom: 12px !important;
+  }
+
+  .dashboard-grid div {
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+
+  #modalContent {
+    width: 90%;
+  }
+
+  #chatPopup {
+    width: 90%;
+    bottom: 90px;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr; /* stack cards vertically */
+  }
+
+  input, select, button {
+    font-size: 1rem !important;
+    padding: 14px !important;
+  }
+
+  .dashboard-grid div {
+    font-size: 1rem;
+    padding: 18px;
+  }
+
+  #passwordCard {
+    width: 90%;
+    padding: 25px;
+  }
+
+  #chatPopup {
+    width: 95%;
+    bottom: 80px;
+  }
+
+  .footer-text {
+    font-size: 0.9rem;
+  }
 }
