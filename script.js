@@ -93,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
   renderUserName();
   updateDashboard();
   renderHistory();
-  renderChatbotHistory();
 });
 
 /***************
@@ -533,14 +532,5 @@ if(deleteAllBtn){
 document.addEventListener("DOMContentLoaded", () => {
   renderUserName();
   updateDashboard();
+  renderHistory();
 });
-
-
-
-/***************
- * INITIALIZE
- ***************/
-renderUserName();
-updateDashboard();
-renderHistory();
-renderChatbotHistory();

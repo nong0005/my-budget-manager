@@ -107,7 +107,10 @@
       <h2>Upcoming Payments</h2>
       <input type="text" id="upcomingDesc" placeholder="Payment description" required>
       <input type="number" id="upcomingAmount" placeholder="Amount" step="0.01" required>
-      <input type="date" id="upcomingDate">
+      <div class="date-wrapper">
+        <input type="date" id="upcomingDate">
+        <span class="date-placeholder">📅 Choose a date</span>
+      </div>
       <button id="addUpcomingBtn">Add Payment</button>
       <ul id="upcomingList"></ul>
     </section>
@@ -115,7 +118,10 @@
     <!-- Daily History Section -->
     <section class="card" id="historySection">
       <h2>Daily History</h2>
-      <input type="date" id="historyDateInput">
+      <div class="date-wrapper">
+        <input type="date" id="historyDateInput">
+        <span class="date-placeholder">📅 Choose a date</span>
+      </div>
       <button id="viewHistoryBtn">View</button>
       <button id="closeHistoryBtn" style="display:none;">Close</button>
       <div id="historyList"></div>

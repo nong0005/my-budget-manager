@@ -282,6 +282,8 @@ ul li button {
   margin-bottom: 10px;
 }
 
+
+
 /* ===== Chatbot Button ===== */
 #chatbotButton {
   position: fixed;
@@ -496,6 +498,37 @@ footer {
   font-size: 0.9rem;
 }
 
+.date-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.date-wrapper input[type="date"] {
+  width: 100%;
+  padding-right: 2.5em; /* space for icon/text */
+}
+
+.date-placeholder {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  pointer-events: none;
+  font-size: 0.9em;
+}
+
+/* Show placeholder when no date is chosen */
+.date-wrapper input[type="date"]:placeholder-shown + .date-placeholder {
+  display: block;
+}
+
+/* Hide placeholder once user picks a date */
+.date-wrapper input[type="date"]:not(:placeholder-shown) + .date-placeholder {
+  display: none;
+}
+
 /* Small fade-in animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
@@ -551,8 +584,6 @@ footer {
   #modalContent {
     width: 90%;
   }
-
-
 }
 
 @media (max-width: 480px) {
@@ -571,14 +602,11 @@ footer {
   }
 
   input, select, button {
+    width: 100% !important;
     font-size: 1rem !important;
     padding: 14px !important;
   }
 
-  input[type="date"] {
-    font-size: 1.1rem !important;   /* slightly bigger for easier tapping */
-    padding: 18px !important;
-  }
 
   .dashboard-grid div {
     font-size: 1rem;
