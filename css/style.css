@@ -541,6 +541,20 @@ footer {
     grid-template-columns: 1fr; /* stack cards vertically */
   }
 
+  /* Make all date inputs full width and taller for easy tap */
+  input[type="date"] {
+    width: 100% !important;
+    padding: 14px 12px !important;
+    font-size: 1rem !important;
+    box-sizing: border-box;
+  }
+
+  /* Optional: ensure buttons next to date inputs have margin for spacing */
+  #upcomingDate,
+  #historyDateInput {
+    margin-bottom: 12px;
+  }
+
   input, select, button {
     font-size: 1rem !important;
     padding: 14px !important;
